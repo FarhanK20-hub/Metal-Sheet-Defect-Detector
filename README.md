@@ -41,6 +41,7 @@ This project is a full-stack AI-powered web application that allows users to upl
 - Sends the updated image back to the frontend
 
 ## 📁 Project Structure
+```
 project/
 │
 ├── backend/
@@ -55,6 +56,7 @@ project/
 │
 └── README.md
 
+```
 ---
 
 ## ⚙️ Getting Started
@@ -69,11 +71,34 @@ project/
 
 ### 📦 Backend Setup
 
+1. Setup Virtual Env:
+```bash
+#On Windows (PowerShell):
+python -m venv venv
+venv\Scripts\activate
+
+#On macOS/Linux:
+python3 -m venv venv
+source venv/bin/activate
+```
+
+2. Install backend dependencies
+```bash
+pip install -r requirements.txt
+```
+
+3. Run Project
 ```bash
 cd backend
-pip install flask flask-cors ultralytics pillow
 python app.py
 ```
+
+If you are not doing virual env setup then execute following command to install dependencies and then run project as shown in step 3:
+```bash
+pip install flask flask-cors ultralytics pillow
+```
+
+
 ### 📦 Frontend Setup
 ```bash
 cd frontend

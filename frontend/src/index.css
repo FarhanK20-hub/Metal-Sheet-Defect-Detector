@@ -1,13 +1,132 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+@import 'tailwindcss';
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  height: 100vh;         /* full viewport height */
+  display: flex;
+  justify-content: center;  /* horizontal center */
+  align-items: center;      /* vertical center */
+  background-color: white; /* keep your background */
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+@layer components {
+  /* Layout */
+  .app-container {
+    @apply min-w-full flex flex-col items-center justify-center font-sans p-6;
+  }
+
+  /* Card container */
+  .card {
+    @apply bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center;
+  }
+
+  /* Heading */
+  .title {
+    @apply text-3xl font-bold mb-6 text-gray-900;
+  }
+
+  /* Form */
+  .form {
+    @apply space-y-6;
+  }
+
+  /* File Input */
+  .file-input {
+  @apply block mx-auto text-sm text-gray-700 file:mr-4 file:py-2 file:px-4
+         file:rounded-md file:border-0 file:text-sm file:font-semibold
+         file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100;
+  width: auto; /* override w-full */
+  max-width: 100%; /* responsive */
+}
+
+
+  /* Buttons */
+  .btn-primary {
+    @apply px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow-md
+           hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  /* Loading */
+  .loading-text {
+    @apply mt-5 text-gray-600 animate-pulse;
+  }
+
+  /* Result */
+  .result-container {
+    @apply mt-8;
+  }
+
+  .result-title {
+    @apply mb-3 text-gray-900 font-medium text-lg;
+  }
+
+  .result-image {
+    @apply max-w-full rounded-lg shadow-md mx-auto;
+  }
 }
