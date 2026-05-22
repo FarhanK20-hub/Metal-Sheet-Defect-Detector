@@ -1,7 +1,7 @@
 {
-  "name": "newfrontend",
+  "name": "tata-steel-defect-inspector",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,7 +14,8 @@
     "axios": "^1.11.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-hook-form": "^7.62.0",
+    "react-router-dom": "^7.6.1",
+    "recharts": "^2.15.3",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {

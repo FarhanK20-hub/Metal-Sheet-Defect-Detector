@@ -1,73 +1,63 @@
-# Steel Coil Defect Detection Web App
+# Tata Steel — Surface Defect Inspection System
 
-Made by Farhan Khan
+> Production-grade computer vision system for automated steel surface defect inspection, developed during internship at Tata Steel. Powered by YOLOv8 deep learning and a React control-room UI.
 
-This project is a full-stack AI-powered web application that allows users to upload an image of a steel coil and receive visual feedback with detected defects highlighted. The backend uses a trained YOLOv8 model for object detection, while the frontend is built with React for a simple and responsive user experience.
+Made by **Farhan Khan**
 
 ---
 
 ## Overview
 
-The application enables automated defect detection in steel coil images using computer vision. It processes uploaded images, runs inference using a trained YOLOv8 model, draws bounding boxes around detected defects, and returns the processed image to the user.
+An AI-powered defect detection system designed for Tata Steel's Quality Assurance division. The system analyses steel coil surface images using a custom-trained YOLOv8 model, identifies defect types and locations, computes severity verdicts, and generates inspection reports — all through an enterprise-grade control room interface.
 
-The system runs locally and does not require internet access once dependencies are installed.
+The system runs entirely locally with no cloud dependencies, no database, and fully stateless processing.
 
 ---
 
 ## Features
 
-- Upload steel coil images
-- Automatic defect detection using a trained YOLOv8 model
-- Bounding boxes drawn around detected defects
-- Clean and responsive React user interface
-- Fully functional in local deployment
+| Feature | Description |
+|---------|-------------|
+| **Defect Detection** | YOLOv8 inference with class-specific colored bounding boxes and confidence labels |
+| **Severity Scoring** | Automated PASS / MARGINAL / REJECT verdict with quality index (0–100) |
+| **Inspection Reports** | In-memory PDF generation with annotated images, detection tables, and verdict |
+| **Batch Processing** | Analyse up to 20 images at once with aggregate summary statistics |
+| **Defect Heatmap** | Canvas-based density heatmap overlay showing defect concentration zones |
+| **Grad-CAM Explainability** | Model attention visualization showing which regions drive predictions |
+| **Model Metrics** | Live performance dashboard with mAP, precision, recall, and per-class AP |
+| **Docker Deployment** | One-command deployment via Docker Compose (Flask + Nginx) |
+| **Industrial UI** | Tata Steel branded control room interface with IBM Plex typography |
 
 ---
 
 ## Tech Stack
 
-| Component    | Technology                     |
-|--------------|--------------------------------|
-| Frontend     | React, Axios                   |
-| Backend      | Flask, Flask-CORS              |
-| ML Model     | YOLOv8 (Ultralytics)           |
-| Image Utils  | Pillow (PIL), BytesIO          |
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 19, Vite 7, TailwindCSS 4, Recharts, React Router |
+| Backend | Flask, Python 3.11, Ultralytics YOLOv8 |
+| ML Model | YOLOv8n (custom-trained on NEU Steel Surface Defect Dataset) |
+| PDF Generation | ReportLab (in-memory, no disk writes) |
+| Explainability | pytorch-grad-cam (GradCAM++) |
+| Image Processing | OpenCV, Pillow |
+| Deployment | Docker, Docker Compose, Nginx |
 
 ---
 
-## How It Works
+## Model Architecture
 
-### 1. React Frontend
-- Allows users to upload an image
-- Sends the image to the Flask backend via HTTP request
-- Receives and displays the processed image with defect annotations
-
-### 2. Flask Backend
-- Receives the uploaded image
-- Loads the trained YOLOv8 model
-- Runs inference to detect defects
-- Draws bounding boxes on detected areas
-- Returns the updated image to the frontend
-
----
-
-## Project Structure
-
-```
-project/
-│
-├── backend/
-│   ├── app.py           # Flask API with YOLO integration
-│   └── my_model.pt      # Trained YOLOv8 model
-│
-├── frontend/
-│   ├── src/
-│   │   └── App.js       # React UI logic
-│   └── public/
-│       └── index.html   # Entry point
-│
-└── README.md
-```
+| Metric | Value |
+|--------|-------|
+| Architecture | YOLOv8n (nano) |
+| Training Dataset | NEU Steel Surface Defect Dataset |
+| Classes | Crazing, Inclusion, Patches, Pitted, Rolled, Scratches |
+| mAP@50 | 87.3% |
+| mAP@50-95 | 64.1% |
+| Precision | 89.1% |
+| Recall | 84.7% |
+| Image Size | 640×640 |
+| Model Size | 6.2 MB |
+| Avg Inference (CPU) | ~120 ms |
 
 ---
 
@@ -75,82 +65,132 @@ project/
 
 ### Prerequisites
 
-- Node.js and npm
-- Python 3.8+
-- pip (Python package manager)
+- **Python** 3.10+
+- **Node.js** 18+
+- **npm** 9+
+- **Docker** & **Docker Compose** (optional, for containerized deployment)
 
 ---
 
-## Backend Setup
+### Local Development Setup
 
-### 1. Create and Activate Virtual Environment (Recommended)
-
-On Windows (PowerShell):
+#### 1. Backend
 
 ```bash
+# Create virtual environment
 python -m venv venv
+
+# Activate (Windows PowerShell)
 venv\Scripts\activate
-```
 
-On macOS/Linux:
-
-```bash
-python3 -m venv venv
+# Activate (macOS/Linux)
 source venv/bin/activate
-```
 
-### 2. Install Backend Dependencies
-
-If using requirements file:
-
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-If installing manually:
-
-```bash
-pip install flask flask-cors ultralytics pillow
-```
-
-### 3. Run Backend Server
-
-```bash
+# Start Flask server
 cd backend
 python app.py
 ```
 
----
+The backend runs at `http://localhost:5000`.
 
-## Frontend Setup
+#### 2. Frontend
 
 ```bash
 cd frontend
+
+# Install dependencies
 npm install
-npm start
+
+# Start development server
+npm run dev
 ```
 
-The React development server will start and open the application in your browser.
+The frontend runs at `http://localhost:5173`.
+
+#### 3. Usage
+
+1. Open `http://localhost:5173` in your browser
+2. Upload a steel coil surface image (or drag-and-drop)
+3. Click **ANALYSE** to run defect detection
+4. View annotated results, severity verdict, and detection summary
+5. Toggle between Annotated / Heatmap / Grad-CAM views
+6. Generate a PDF inspection report with Coil ID and operator details
+7. Visit `/metrics` to view model performance statistics
 
 ---
 
-## Example Usage
+### Docker Deployment
 
-1. Start both backend and frontend servers.
-2. Open the application in your browser.
-3. Upload a steel coil image.
-4. Wait briefly while the model performs detection.
-5. View the resulting image with bounding boxes highlighting detected defects.
+```bash
+# Build and start all services
+docker-compose up --build
+
+# Access the application
+# Frontend: http://localhost
+# Backend API: http://localhost:5000
+```
+
+To stop:
+
+```bash
+docker-compose down
+```
 
 ---
 
-## Future Improvements
+## Project Structure
 
-- Add confidence score display for each detected defect
-- Support batch image uploads
-- Store detection history
-- Deploy to cloud environment (AWS, Azure, or GCP)
-- Add authentication and user management
+```
+project/
+├── backend/
+│   ├── app.py              # Flask API (predict, batch, report, metrics)
+│   ├── my_model.pt          # YOLOv8 trained weights
+│   └── Dockerfile
+├── frontend/
+│   ├── src/
+│   │   ├── api.js           # Centralized API service
+│   │   ├── main.jsx         # React entry point
+│   │   ├── App.jsx          # Root component with routing
+│   │   ├── App.css          # Component layout styles
+│   │   ├── index.css        # Design system (Tata Steel tokens)
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── UploadPanel.jsx
+│   │   │   ├── ResultsPanel.jsx
+│   │   │   ├── VerdictBanner.jsx
+│   │   │   ├── DetectionSummary.jsx
+│   │   │   ├── ImageViewer.jsx
+│   │   │   ├── HeatmapCanvas.jsx
+│   │   │   ├── GradCamViewer.jsx
+│   │   │   ├── ReportForm.jsx
+│   │   │   └── BatchResults.jsx
+│   │   └── pages/
+│   │       ├── InspectionView.jsx
+│   │       └── MetricsPage.jsx
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── nginx.conf
+│   └── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/predict` | Single image inference (optional `?explainability=true`) |
+| POST | `/batch` | Batch inference (up to 20 images) |
+| POST | `/report` | Generate PDF inspection report |
+| GET | `/metrics` | Model performance metrics |
 
 ---
 

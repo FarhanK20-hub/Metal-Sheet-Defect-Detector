@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend
+    container_name: tata_steel_backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/my_model.pt:/app/my_model.pt:ro
+
+  frontend:
+    build: ./frontend
+    container_name: tata_steel_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
