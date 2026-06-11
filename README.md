@@ -1,5 +1,7 @@
 # Tata Steel — Surface Defect Inspection System
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-metal--sheet--defect--detector.vercel.app-003087?style=for-the-badge&logo=vercel)](https://metal-sheet-defect-detector.vercel.app/)
+
 > Production-grade computer vision system for automated steel surface defect inspection, developed during internship at Tata Steel. Powered by YOLOv8 deep learning and a React control-room UI.
 
 Made by **Farhan Khan**
@@ -119,6 +121,20 @@ The frontend runs at `http://localhost:5173`.
 5. Toggle between Annotated / Heatmap / Grad-CAM views
 6. Generate a PDF inspection report with Coil ID and operator details
 7. Visit `/metrics` to view model performance statistics
+
+---
+
+### ☁️ Free Cloud Deployment
+
+This project is deployed completely for free using Vercel and Hugging Face Spaces:
+
+1. **Backend (Hugging Face Spaces)**: 
+   - Deployed as a Docker Space on Hugging Face (16GB RAM Free Tier).
+   - The Flask API listens on port `7860`.
+   - Hosts the `my_model.pt` YOLOv8 model for inference.
+2. **Frontend (Vercel)**:
+   - Deployed as a static Vite site on Vercel.
+   - Connects to the Hugging Face backend via the `VITE_API_URL` environment variable.
 
 ---
 
